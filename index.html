@@ -1,15 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Tamagotchi</title>
-    <link href="./styles.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="gameBoy">
-      <p class="bar">Energy <span class="health" /></p>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tamagotchi</title>
+  <link href="./styles.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <div class="console-frame">
+      <div class="console-frame__content">
+        <div class="display-frame"></div>
+        <div class="action-buttons">
+          <div class="action-buttons__gameon active">
+            <button class="action-button action-button--rounded action-button--hunger"><img
+                class="action-button__icon action-button__icon--hunger" src="./assets/icons/Icon=Hunger.svg"
+                alt=""></button>
+            <button class="action-button action-button--rounded action-button--sleep"><img
+                class="action-button__icon action-button__icon--sleep" src="./assets/icons/Icon=Sleep.svg"
+                alt=""></button>
+            <button class="action-button action-button--rounded action-button--fun"><img
+                class="action-button__icon action-button__icon--fun" src="./assets/icons/Icon=Fun.svg" alt=""></button>
+          </div>
+          <div class="action-buttons__gameover ">
+            <button class=" action-button action-button--restart">Restart</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script src="./app.js" type="module"></script>
-  </body>
+  </div>
+
+
+  <script src="./app.js" type="module"></script>
+</body>
+
 </html>
