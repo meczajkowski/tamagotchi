@@ -58,7 +58,21 @@ body {
   background-color: var(--color-display);
   box-shadow: inset 0 0 0 10px var(--color-display-light);
 
-  padding: 10px;
+  padding: 24px;
+}
+
+.display__bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bar-item {
+  width: 65px;
+  height: 60px;
+  font-size: 60px;
+  display: flex;
+  align-items: center;
 }
 
 /* action buttons */
