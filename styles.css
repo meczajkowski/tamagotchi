@@ -5,6 +5,10 @@
   --color-secondary: #dfa46d;
   --color-secondary-dark: #724d50;
 
+  --color-display: #cdedfc;
+  --color-display-light: #e7f6fd;
+  --color-display-dark: #9fdcf9;
+
   /* fonts */
   --font-family-base: 'VT323', monospace;
   --font-size-l: 50px;
@@ -19,7 +23,7 @@
 body {
   background: var(--color-onbackground);
   font-family: var(--font-family-base);
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .container {
@@ -49,6 +53,56 @@ body {
   border: 10px var(--color-secondary) solid;
 }
 
+.display {
+  height: 100%;
+  background-color: var(--color-display);
+  box-shadow: inset 0 0 0 10px var(--color-display-light);
+
+  padding: 23px 25px;
+}
+
+.display__bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.display__tamagotchi-container {
+  border: 7px var(--color-display-dark) solid;
+  height: 280px;
+  width: 100%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.display__baseline {
+  width: 162px;
+  height: 8px;
+  background-color: white;
+  margin-bottom: 60px;
+}
+
+.display__tamagochi-status {
+  font-size: 56px;
+  line-height: 56px;
+  text-align: center;
+
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  color: var(--color-secondary-dark);
+  background-color: var(--color-display-light);
+}
+
+.bar-item {
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+}
+
 /* action buttons */
 
 .action-buttons__gameon,
@@ -56,7 +110,7 @@ body {
   align-items: center;
   justify-content: space-between;
 
-  margin: 24px 35px;
+  margin: 25px 35px;
   display: none;
 }
 
@@ -96,6 +150,19 @@ body {
 }
 
 /* media */
+
+@media (max-width: 340px) {
+  .bar-item {
+    font-size: 45px;
+    display: flex;
+    align-items: center;
+  }
+
+  .bar-item__icon {
+    width: 30px;
+    height: 30px;
+  }
+}
 
 @media (max-width: 320px) {
   .action-buttons__gameon,
