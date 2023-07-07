@@ -34,7 +34,6 @@ body {
 }
 
 /* console frame */
-
 .console-frame {
   background: var(--color-primary);
   height: 657px;
@@ -46,7 +45,6 @@ body {
 }
 
 /* display frame */
-
 .display-frame {
   width: 100%;
   height: 477px;
@@ -68,6 +66,12 @@ body {
   height: 60px;
 }
 
+.bar-item {
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+}
+
 .display__tamagotchi-container {
   border: 7px var(--color-display-dark) solid;
   height: 280px;
@@ -79,13 +83,14 @@ body {
 }
 
 .display__baseline {
+  position: relative;
   width: 162px;
   height: 8px;
   background-color: white;
   margin-bottom: 60px;
 }
 
-.display__tamagochi-status {
+.display__tamagotchi-status {
   font-size: 56px;
   line-height: 56px;
   text-align: center;
@@ -97,14 +102,56 @@ body {
   background-color: var(--color-display-light);
 }
 
-.bar-item {
-  font-size: 60px;
-  display: flex;
-  align-items: center;
+/* tamagotchi states */
+.display__tamagotchi {
+  position: absolute;
+  bottom: 8px;
+  left: 5px;
+  width: 152px;
+  height: 130px;
+}
+
+.display__tamagotchi--happy {
+  background: url('./assets/sprites/State=Standing.png');
+}
+
+.display__tamagotchi--dead {
+  left: -10px;
+  width: 182px;
+  height: 72px;
+  background: url('./assets/sprites/State=Dead.png');
+}
+
+.display__tamagotchi--sleepy {
+  background: url('./assets/sprites/State=Sleepy.png');
+}
+
+.display__tamagotchi--hungry {
+  background: url('./assets/sprites/State=Hungry.png');
+}
+
+.display__tamagotchi--bored {
+  background: url('./assets/sprites/State=Bored.png');
+}
+
+.display__tamagotchi--sleeping {
+  background: url('./assets/sprites/State=Sleeping.png');
+  animation: animate-tamagotchi 0.8s steps(2) infinite;
+}
+
+.display__tamagotchi--eating {
+  background: url('./assets/sprites/State=Eating.png');
+  animation: animate-tamagotchi 0.8s steps(2) infinite;
+}
+.display__tamagotchi--playing {
+  left: -40px;
+  width: 200px;
+  height: 144px;
+  background: url('./assets/sprites/State=Playing.png');
+  animation: animate-tamagotchi-playing 0.8s steps(2) infinite;
 }
 
 /* action buttons */
-
 .action-buttons__gameon,
 .action-buttons__gameover {
   align-items: center;
@@ -149,8 +196,20 @@ body {
   transform: translateY(7px);
 }
 
-/* media */
+/* keyframes */
+@keyframes animate-tamagotchi {
+  100% {
+    background-position: -304px;
+  }
+}
 
+@keyframes animate-tamagotchi-playing {
+  100% {
+    background-position: -400px;
+  }
+}
+
+/* media */
 @media (max-width: 340px) {
   .bar-item {
     font-size: 45px;
