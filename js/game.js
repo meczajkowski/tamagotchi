@@ -1,4 +1,4 @@
-import Tamagotchi from "./modules/tamagotchi.js";
+import Tamagotchi from './modules/tamagotchi.js';
 
 export default class Game {
   constructor() {
@@ -6,7 +6,12 @@ export default class Game {
   }
 
   start = ({ healthElement, hungerElement, energyElement, funElement }) => {
-    this.tamagotchi.mount({ healthElement });
-    console.log("Game started");
+    this.tamagotchi.mount({
+      healthElement,
+      hungerElement,
+      energyElement,
+      funElement,
+    });
+    console.log('Game started');
   };
 }

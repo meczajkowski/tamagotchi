@@ -1,8 +1,13 @@
-import Game from "./js/game.js";
+import Game from './js/game.js';
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   const game = new Game();
 
   // Start game
-  game.start({ healthElement: ".health" });
+  game.start({
+    healthElement: '.health',
+    hungerElement: '.hunger',
+    energyElement: '.energy',
+    funElement: '.fun',
+  });
 });
