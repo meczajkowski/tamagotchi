@@ -53,8 +53,34 @@ export default class Tamagotchi {
     }
 
     // hunger should decrease by 1 points per second
+    if (this.hunger.value > 0) {
+      this.hunger.value -= 1;
+      this.displayHunger('.hunger');
+    }
     // fun should decrease by 1 points per second
+    if (this.fun.value > 0) {
+      this.fun.value -= 1;
+      this.displayFun('.fun');
+    }
+
     // health should decrease by 1 points per second when hunger or energy is below or equal to 0
+    if (this.hunger.value <= 0 || this.energy.value <= 0) {
+      if (this.health.value > 0) {
+        this.health.value -= 1;
+        this.displayHealth('.health');
+      }
+    }
+
     // energy should decrease by additional 1 point per 2 seconds when fun is below or equal to 0
+    if (this.fun.value <= 0) {
+      this.energy.importance -= 0.5;
+      if (this.energy.importance <= 0) {
+        if (this.energy.value > 0) {
+          this.energy.value -= 1;
+          this.energy.importance = 2;
+          this.displayEnergy('.energy');
+        }
+      }
+    }
   }
 }
