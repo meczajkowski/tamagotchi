@@ -4,8 +4,10 @@ export default class Tamagotchi {
     this.hunger = { value: 10, importance: 3 };
     this.energy = { value: 10, importance: 2 };
     this.fun = { value: 10, importance: 4 };
+    this.state = 'happy';
     this.timeOfGame = 0;
     this.timer = setInterval(() => {
+      this.setState();
       this.decreaseParameters();
       this.timeOfGame++;
       console.log(this.timeOfGame + ' seconds passed');
@@ -48,26 +50,22 @@ export default class Tamagotchi {
       if (this.energy.importance <= 0) {
         this.energy.value -= 1;
         this.energy.importance = 2;
-        // this.displayEnergy('.energy');
       }
     }
 
     // hunger should decrease by 1 points per second
     if (this.hunger.value > 0) {
       this.hunger.value -= 1;
-      // this.displayHunger('.hunger');
     }
     // fun should decrease by 1 points per second
     if (this.fun.value > 0) {
       this.fun.value -= 1;
-      // this.displayFun('.fun');
     }
 
     // health should decrease by 1 points per second when hunger or energy is below or equal to 0
     if (this.hunger.value <= 0 || this.energy.value <= 0) {
       if (this.health.value > 0) {
         this.health.value -= 1;
-        // this.displayHealth('.health');
       }
     }
 
@@ -78,7 +76,6 @@ export default class Tamagotchi {
         if (this.energy.value > 0) {
           this.energy.value -= 1;
           this.energy.importance = 2;
-          // this.displayEnergy('.energy');
         }
       }
     }
@@ -89,5 +86,29 @@ export default class Tamagotchi {
       energyElement: '.energy',
       funElement: '.fun',
     });
+  }
+
+  setState() {
+    if (this.health.value <= 0) {
+      this.state = 'dead';
+    } else if (this.hunger.value <= 6) {
+      this.state = 'hungry';
+    } else if (this.energy.value <= 6) {
+      this.state = 'sleepy';
+    } else if (this.fun.value <= 6) {
+      this.state = 'sad';
+    } else {
+      this.state = 'happy';
+    }
+
+    this.setAvatar();
+  }
+
+  setAvatar() {
+    const avatar = document.querySelector('.display__tamagotchi');
+    const avatarStatus = document.querySelector('.display__tamagotchi-status');
+
+    avatar.classList = `display__tamagotchi display__tamagotchi--${this.state}`;
+    avatarStatus.textContent = this.state.toUpperCase();
   }
 }
