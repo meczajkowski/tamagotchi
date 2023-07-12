@@ -5,6 +5,9 @@ export default class Tamagotchi {
     this.energy = { value: 10, importance: 2 };
     this.fun = { value: 10, importance: 4 };
     this.state = 'happy';
+    this.isPlaying = false;
+    this.isSleeping = false;
+    this.isEating = false;
     this.timeOfGame = 0;
     this.timer = setInterval(() => {
       this.setState();
@@ -41,6 +44,18 @@ export default class Tamagotchi {
     this.displayHunger(hungerElement);
     this.displayEnergy(energyElement);
     this.displayFun(funElement);
+
+    const hungerButton = document.querySelector('.action-button--hunger');
+    hungerButton.addEventListener('mousedown', this.startFeeding);
+    hungerButton.addEventListener('mouseup', this.stopFeeding);
+
+    const sleepButton = document.querySelector('.action-button--sleep');
+    sleepButton.addEventListener('mousedown', this.startSleeping);
+    sleepButton.addEventListener('mouseup', this.stopSleeping);
+
+    const funButton = document.querySelector('.action-button--fun');
+    funButton.addEventListener('mousedown', this.startPlaying);
+    funButton.addEventListener('mouseup', this.stopPlaying);
   };
 
   decreaseParameters() {
@@ -81,6 +96,7 @@ export default class Tamagotchi {
     }
 
     this.mount({
+      //TODO change this later
       healthElement: '.health',
       hungerElement: '.hunger',
       energyElement: '.energy',
@@ -91,6 +107,12 @@ export default class Tamagotchi {
   setState() {
     if (this.health.value <= 0) {
       this.state = 'dead';
+    } else if (this.isEating) {
+      this.state = 'eating';
+    } else if (this.isSleeping) {
+      this.state = 'sleeping';
+    } else if (this.isPlaying) {
+      this.state = 'playing';
     } else if (this.hunger.value <= 6) {
       this.state = 'hungry';
     } else if (this.energy.value <= 6) {
@@ -103,6 +125,36 @@ export default class Tamagotchi {
 
     this.setAvatar();
   }
+
+  startFeeding = () => {
+    if (this.state !== 'dead') {
+      this.isEating = true;
+    }
+  };
+
+  stopFeeding = () => {
+    this.isEating = false;
+  };
+
+  startSleeping = () => {
+    if (this.state !== 'dead') {
+      this.isSleeping = true;
+    }
+  };
+
+  stopSleeping = () => {
+    this.isSleeping = false;
+  };
+
+  startPlaying = () => {
+    if (this.state !== 'dead') {
+      this.isPlaying = true;
+    }
+  };
+
+  stopPlaying = () => {
+    this.isPlaying = false;
+  };
 
   setAvatar() {
     const avatar = document.querySelector('.display__tamagotchi');
