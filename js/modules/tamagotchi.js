@@ -66,19 +66,22 @@ export default class Tamagotchi {
 
   handleParameters() {
     // energy should decrease by 1 point per 2 seconds
-    if (this.energy.value > 0) {
+    if (this.energy.value > 0 && !this.isSleeping) {
       this.energy.importance -= 1;
       if (this.energy.importance <= 0) {
         this.energy.value -= 1;
         this.energy.importance = 2;
       }
+    } // Sleeping should recover 2 energy point per second
+    else if (this.isSleeping && this.energy.value < 9) {
+      this.energy.value += 2;
     }
 
     // hunger should decrease by 1 points per second
-    // Eating should recover 2 hunger point per second
     if (this.hunger.value > 0 && !this.isEating) {
       this.hunger.value -= 1;
-    } else if (this.isEating && this.hunger.value < 9) {
+    } // Eating should recover 2 hunger point per second
+    else if (this.isEating && this.hunger.value < 9) {
       this.hunger.value += 2;
     }
     // fun should decrease by 1 points per second
@@ -151,6 +154,7 @@ export default class Tamagotchi {
         this.startFeeding();
       }
     }
+    // this is the code that stops the Tamagotchi from sleeping when another action is pressed or when the sleep action is finished by clicking on the action button again
     if (event.target.closest('.action-button--sleep')) {
       if (this.isSleeping) {
         this.stopSleeping();
