@@ -36,11 +36,13 @@ export default class Tamagotchi {
   mount = ({ healthElement, hungerElement, energyElement, funElement }) => {
     const actionButtons = document.querySelector('.action-buttons__gameon');
 
-    actionButtons.addEventListener('mousedown', this.startAction.bind(this));
-    actionButtons.addEventListener('mouseup', this.stopAction.bind(this));
+    // actionButtons.addEventListener('mousedown', this.startAction.bind(this));
+    // actionButtons.addEventListener('mouseup', this.stopAction.bind(this));
 
-    actionButtons.addEventListener('touchstart', this.startAction.bind(this));
-    actionButtons.addEventListener('touchend', this.stopAction.bind(this));
+    // actionButtons.addEventListener('touchstart', this.startAction.bind(this));
+    // actionButtons.addEventListener('touchend', this.stopAction.bind(this));
+
+    actionButtons.addEventListener('click', this.handleActions.bind(this));
 
     this.displayHealth(healthElement);
     this.displayHunger(hungerElement);
@@ -135,32 +137,37 @@ export default class Tamagotchi {
     avatarStatus.textContent = this.state.toUpperCase();
   }
 
-  startAction(event) {
+  handleActions(event) {
     const actionButtons = document.querySelector('.action-buttons__gameon');
-    if (event.target === actionButtons) return;
-    if (event.target.closest('.action-button--hunger')) {
-      this.startFeeding();
-    }
-    if (event.target.closest('.action-button--sleep')) {
-      this.startSleeping();
-    }
-    if (event.target.closest('.action-button--fun')) {
-      this.startPlaying();
-    }
-  }
 
-  stopAction(event) {
-    const actionButtons = document.querySelector('.action-buttons__gameon');
     if (event.target === actionButtons) return;
+
     if (event.target.closest('.action-button--hunger')) {
-      console.log('this is hunger button');
-      this.stopFeeding();
+      if (this.isEating) {
+        this.stopFeeding();
+      } else {
+        this.isPlaying = false;
+        this.isSleeping = false;
+        this.startFeeding();
+      }
     }
     if (event.target.closest('.action-button--sleep')) {
-      this.stopSleeping();
+      if (this.isSleeping) {
+        this.stopSleeping();
+      } else {
+        this.isEating = false;
+        this.isPlaying = false;
+        this.startSleeping();
+      }
     }
     if (event.target.closest('.action-button--fun')) {
-      this.stopPlaying();
+      if (this.isPlaying) {
+        this.stopPlaying();
+      } else {
+        this.isEating = false;
+        this.isSleeping = false;
+        this.startPlaying();
+      }
     }
   }
 
