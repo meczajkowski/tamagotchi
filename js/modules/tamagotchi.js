@@ -9,12 +9,6 @@ export default class Tamagotchi {
     this.isSleeping = false;
     this.isEating = false;
     this.timeOfGame = 0;
-    this.timer = setInterval(() => {
-      this.setState();
-      this.decreaseParameters();
-      this.timeOfGame++;
-      console.log(this.timeOfGame + ' seconds passed');
-    }, 1000);
 
     console.log('Tamagotchi initialized');
   }
@@ -40,23 +34,33 @@ export default class Tamagotchi {
   };
 
   mount = ({ healthElement, hungerElement, energyElement, funElement }) => {
+    const actionButtons = document.querySelector('.action-buttons__gameon');
+
+    actionButtons.addEventListener('mousedown', this.startAction.bind(this));
+    actionButtons.addEventListener('mouseup', this.stopAction.bind(this));
+
+    actionButtons.addEventListener('touchstart', this.startAction.bind(this));
+    actionButtons.addEventListener('touchend', this.stopAction.bind(this));
+
     this.displayHealth(healthElement);
     this.displayHunger(hungerElement);
     this.displayEnergy(energyElement);
     this.displayFun(funElement);
 
-    const hungerButton = document.querySelector('.action-button--hunger');
-    hungerButton.addEventListener('mousedown', this.startFeeding);
-    hungerButton.addEventListener('mouseup', this.stopFeeding);
-
-    const sleepButton = document.querySelector('.action-button--sleep');
-    sleepButton.addEventListener('mousedown', this.startSleeping);
-    sleepButton.addEventListener('mouseup', this.stopSleeping);
-
-    const funButton = document.querySelector('.action-button--fun');
-    funButton.addEventListener('mousedown', this.startPlaying);
-    funButton.addEventListener('mouseup', this.stopPlaying);
+    this.timer = setInterval(() => {
+      this.setState();
+      this.decreaseParameters();
+      this.timeOfGame++;
+      // console.log(this.timeOfGame + ' seconds passed');
+    }, 1000);
   };
+
+  updateDisplay() {
+    this.displayHealth('.health');
+    this.displayHunger('.hunger');
+    this.displayEnergy('.energy');
+    this.displayFun('.fun');
+  }
 
   decreaseParameters() {
     // energy should decrease by 1 point per 2 seconds
@@ -95,13 +99,7 @@ export default class Tamagotchi {
       }
     }
 
-    this.mount({
-      //TODO change this later
-      healthElement: '.health',
-      hungerElement: '.hunger',
-      energyElement: '.energy',
-      funElement: '.fun',
-    });
+    this.updateDisplay();
   }
 
   setState() {
@@ -126,36 +124,6 @@ export default class Tamagotchi {
     this.setAvatar();
   }
 
-  startFeeding = () => {
-    if (this.state !== 'dead') {
-      this.isEating = true;
-    }
-  };
-
-  stopFeeding = () => {
-    this.isEating = false;
-  };
-
-  startSleeping = () => {
-    if (this.state !== 'dead') {
-      this.isSleeping = true;
-    }
-  };
-
-  stopSleeping = () => {
-    this.isSleeping = false;
-  };
-
-  startPlaying = () => {
-    if (this.state !== 'dead') {
-      this.isPlaying = true;
-    }
-  };
-
-  stopPlaying = () => {
-    this.isPlaying = false;
-  };
-
   setAvatar() {
     const avatar = document.querySelector('.display__tamagotchi');
     const avatarStatus = document.querySelector('.display__tamagotchi-status');
@@ -163,4 +131,69 @@ export default class Tamagotchi {
     avatar.classList = `display__tamagotchi display__tamagotchi--${this.state}`;
     avatarStatus.textContent = this.state.toUpperCase();
   }
+
+  startAction(event) {
+    const actionButtons = document.querySelector('.action-buttons__gameon');
+    if (event.target === actionButtons) return;
+    if (event.target.closest('.action-button--hunger')) {
+      this.startFeeding();
+    }
+    if (event.target.closest('.action-button--sleep')) {
+      this.startSleeping();
+    }
+    if (event.target.closest('.action-button--fun')) {
+      this.startPlaying();
+    }
+  }
+
+  stopAction(event) {
+    const actionButtons = document.querySelector('.action-buttons__gameon');
+    if (event.target === actionButtons) return;
+    if (event.target.closest('.action-button--hunger')) {
+      console.log('this is hunger button');
+      this.stopFeeding();
+    }
+    if (event.target.closest('.action-button--sleep')) {
+      this.stopSleeping();
+    }
+    if (event.target.closest('.action-button--fun')) {
+      this.stopPlaying();
+    }
+  }
+
+  startFeeding = () => {
+    if (this.state !== 'dead') {
+      this.isEating = true;
+      this.setState();
+    }
+  };
+
+  stopFeeding = () => {
+    this.isEating = false;
+    this.setState();
+  };
+
+  startSleeping = () => {
+    if (this.state !== 'dead') {
+      this.isSleeping = true;
+      this.setState();
+    }
+  };
+
+  stopSleeping = () => {
+    this.isSleeping = false;
+    this.setState();
+  };
+
+  startPlaying = () => {
+    if (this.state !== 'dead') {
+      this.isPlaying = true;
+      this.setState();
+    }
+  };
+
+  stopPlaying = () => {
+    this.isPlaying = false;
+    this.setState();
+  };
 }
