@@ -4,12 +4,11 @@ export default class Tamagotchi {
     this.hunger = { value: 10, importance: 3 };
     this.energy = { value: 10, importance: 2 };
     this.fun = { value: 10, importance: 4 };
+    this.state = 'happy';
+    this.isPlaying = false;
+    this.isSleeping = false;
+    this.isEating = false;
     this.timeOfGame = 0;
-    this.timer = setInterval(() => {
-      this.decreaseParameters();
-      this.timeOfGame++;
-      console.log(this.timeOfGame + ' seconds passed');
-    }, 1000);
 
     console.log('Tamagotchi initialized');
   }
@@ -35,11 +34,33 @@ export default class Tamagotchi {
   };
 
   mount = ({ healthElement, hungerElement, energyElement, funElement }) => {
+    const actionButtons = document.querySelector('.action-buttons__gameon');
+
+    actionButtons.addEventListener('mousedown', this.startAction.bind(this));
+    actionButtons.addEventListener('mouseup', this.stopAction.bind(this));
+
+    actionButtons.addEventListener('touchstart', this.startAction.bind(this));
+    actionButtons.addEventListener('touchend', this.stopAction.bind(this));
+
     this.displayHealth(healthElement);
     this.displayHunger(hungerElement);
     this.displayEnergy(energyElement);
     this.displayFun(funElement);
+
+    this.timer = setInterval(() => {
+      this.setState();
+      this.decreaseParameters();
+      this.timeOfGame++;
+      // console.log(this.timeOfGame + ' seconds passed');
+    }, 1000);
   };
+
+  updateDisplay() {
+    this.displayHealth('.health');
+    this.displayHunger('.hunger');
+    this.displayEnergy('.energy');
+    this.displayFun('.fun');
+  }
 
   decreaseParameters() {
     // energy should decrease by 1 point per 2 seconds
@@ -48,26 +69,22 @@ export default class Tamagotchi {
       if (this.energy.importance <= 0) {
         this.energy.value -= 1;
         this.energy.importance = 2;
-        // this.displayEnergy('.energy');
       }
     }
 
     // hunger should decrease by 1 points per second
     if (this.hunger.value > 0) {
       this.hunger.value -= 1;
-      // this.displayHunger('.hunger');
     }
     // fun should decrease by 1 points per second
     if (this.fun.value > 0) {
       this.fun.value -= 1;
-      // this.displayFun('.fun');
     }
 
     // health should decrease by 1 points per second when hunger or energy is below or equal to 0
     if (this.hunger.value <= 0 || this.energy.value <= 0) {
       if (this.health.value > 0) {
         this.health.value -= 1;
-        // this.displayHealth('.health');
       }
     }
 
@@ -78,16 +95,105 @@ export default class Tamagotchi {
         if (this.energy.value > 0) {
           this.energy.value -= 1;
           this.energy.importance = 2;
-          // this.displayEnergy('.energy');
         }
       }
     }
 
-    this.mount({
-      healthElement: '.health',
-      hungerElement: '.hunger',
-      energyElement: '.energy',
-      funElement: '.fun',
-    });
+    this.updateDisplay();
   }
+
+  setState() {
+    if (this.health.value <= 0) {
+      this.state = 'dead';
+    } else if (this.isEating) {
+      this.state = 'eating';
+    } else if (this.isSleeping) {
+      this.state = 'sleeping';
+    } else if (this.isPlaying) {
+      this.state = 'playing';
+    } else if (this.hunger.value <= 6) {
+      this.state = 'hungry';
+    } else if (this.energy.value <= 6) {
+      this.state = 'sleepy';
+    } else if (this.fun.value <= 6) {
+      this.state = 'sad';
+    } else {
+      this.state = 'happy';
+    }
+
+    this.setAvatar();
+  }
+
+  setAvatar() {
+    const avatar = document.querySelector('.display__tamagotchi');
+    const avatarStatus = document.querySelector('.display__tamagotchi-status');
+
+    avatar.classList = `display__tamagotchi display__tamagotchi--${this.state}`;
+    avatarStatus.textContent = this.state.toUpperCase();
+  }
+
+  startAction(event) {
+    const actionButtons = document.querySelector('.action-buttons__gameon');
+    if (event.target === actionButtons) return;
+    if (event.target.closest('.action-button--hunger')) {
+      this.startFeeding();
+    }
+    if (event.target.closest('.action-button--sleep')) {
+      this.startSleeping();
+    }
+    if (event.target.closest('.action-button--fun')) {
+      this.startPlaying();
+    }
+  }
+
+  stopAction(event) {
+    const actionButtons = document.querySelector('.action-buttons__gameon');
+    if (event.target === actionButtons) return;
+    if (event.target.closest('.action-button--hunger')) {
+      console.log('this is hunger button');
+      this.stopFeeding();
+    }
+    if (event.target.closest('.action-button--sleep')) {
+      this.stopSleeping();
+    }
+    if (event.target.closest('.action-button--fun')) {
+      this.stopPlaying();
+    }
+  }
+
+  startFeeding = () => {
+    if (this.state !== 'dead') {
+      this.isEating = true;
+      this.setState();
+    }
+  };
+
+  stopFeeding = () => {
+    this.isEating = false;
+    this.setState();
+  };
+
+  startSleeping = () => {
+    if (this.state !== 'dead') {
+      this.isSleeping = true;
+      this.setState();
+    }
+  };
+
+  stopSleeping = () => {
+    this.isSleeping = false;
+    this.setState();
+  };
+
+  startPlaying = () => {
+    if (this.state !== 'dead') {
+      this.isPlaying = true;
+      this.setState();
+    }
+  };
+
+  stopPlaying = () => {
+    this.isPlaying = false;
+    this.setState();
+  };
 }
