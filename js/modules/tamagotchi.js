@@ -49,7 +49,7 @@ export default class Tamagotchi {
 
     this.timer = setInterval(() => {
       this.setState();
-      this.decreaseParameters();
+      this.handleParameters();
       this.timeOfGame++;
       // console.log(this.timeOfGame + ' seconds passed');
     }, 1000);
@@ -62,7 +62,7 @@ export default class Tamagotchi {
     this.displayFun('.fun');
   }
 
-  decreaseParameters() {
+  handleParameters() {
     // energy should decrease by 1 point per 2 seconds
     if (this.energy.value > 0) {
       this.energy.importance -= 1;
@@ -73,8 +73,11 @@ export default class Tamagotchi {
     }
 
     // hunger should decrease by 1 points per second
-    if (this.hunger.value > 0) {
+    // Eating should recover 2 hunger point per second
+    if (this.hunger.value > 0 && !this.isEating) {
       this.hunger.value -= 1;
+    } else if (this.isEating && this.hunger.value < 9) {
+      this.hunger.value += 2;
     }
     // fun should decrease by 1 points per second
     if (this.fun.value > 0) {
