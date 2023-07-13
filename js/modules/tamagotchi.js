@@ -65,6 +65,7 @@ export default class Tamagotchi {
   }
 
   handleParameters() {
+    // Energy
     // energy should decrease by 1 point per 2 seconds
     if (this.energy.value > 0 && !this.isSleeping) {
       this.energy.importance -= 1;
@@ -77,6 +78,7 @@ export default class Tamagotchi {
       this.energy.value += 2;
     }
 
+    // Hunger
     // hunger should decrease by 1 points per second
     if (this.hunger.value > 0 && !this.isEating) {
       this.hunger.value -= 1;
@@ -84,11 +86,19 @@ export default class Tamagotchi {
     else if (this.isEating && this.hunger.value < 9) {
       this.hunger.value += 2;
     }
+
+    // Fun
     // fun should decrease by 1 points per second
-    if (this.fun.value > 0) {
+    if (this.fun.value > 0 && !this.isPlaying) {
       this.fun.value -= 1;
+    } // Playing should recover 2 fun points per second
+    else if (this.isPlaying && this.fun.value < 9) {
+      this.fun.value += 2;
+      // Playing should decrease energy by 1 energy point per second
+      this.energy.value -= 1;
     }
 
+    // Health
     // health should decrease by 1 points per second when hunger or energy is below or equal to 0
     if (this.hunger.value <= 0 || this.energy.value <= 0) {
       if (this.health.value > 0) {
@@ -97,7 +107,7 @@ export default class Tamagotchi {
     }
 
     // energy should decrease by additional 1 point per 2 seconds when fun is below or equal to 0
-    if (this.fun.value <= 0) {
+    if (this.fun.value <= 0 && !this.isSleeping) {
       this.energy.importance -= 0.5;
       if (this.energy.importance <= 0) {
         if (this.energy.value > 0) {
@@ -164,6 +174,7 @@ export default class Tamagotchi {
         this.startSleeping();
       }
     }
+    // this is the code that stops the Tamagotchi from playing when another action is pressed or when the play action is finished by clicking on the action button again
     if (event.target.closest('.action-button--fun')) {
       if (this.isPlaying) {
         this.stopPlaying();
