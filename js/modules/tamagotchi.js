@@ -58,10 +58,27 @@ export default class Tamagotchi {
   };
 
   updateDisplay() {
+    const buttonsGameon = document.querySelector('.action-buttons__gameon');
+    const buttonsGameover = document.querySelector('.action-buttons__gameover');
+
     this.displayHealth('.health');
     this.displayHunger('.hunger');
     this.displayEnergy('.energy');
     this.displayFun('.fun');
+
+    if (this.state === 'dead') {
+      buttonsGameon.classList.remove('active');
+      buttonsGameon.setAttribute('disabled', true);
+
+      buttonsGameover.classList.add('active');
+      buttonsGameover.setAttribute('disabled', false);
+    } else {
+      buttonsGameon.classList = 'action-buttons__gameon active';
+      buttonsGameon.setAttribute('disabled', false);
+
+      buttonsGameover.classList = 'action-buttons__gameover';
+      buttonsGameover.setAttribute('disabled', false);
+    }
   }
 
   handleParameters() {
@@ -122,6 +139,7 @@ export default class Tamagotchi {
 
   setState() {
     if (this.health.value <= 0) {
+      // set the Tamagotchi's state to 'dead' when its health falls below 0
       this.state = 'dead';
     } else if (this.isEating) {
       this.state = 'eating';
