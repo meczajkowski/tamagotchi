@@ -154,6 +154,7 @@ export default class Tamagotchi {
         this.startFeeding();
       }
     }
+    // this is the code that stops the Tamagotchi from sleeping when another action is pressed or when the sleep action is finished by clicking on the action button again
     if (event.target.closest('.action-button--sleep')) {
       if (this.isSleeping) {
         this.stopSleeping();
