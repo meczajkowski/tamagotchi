@@ -13,5 +13,19 @@ export default class Game {
       funElement,
     });
     console.log('Game started');
+
+    const restartButton = document.querySelector('.action-button--restart');
+    restartButton.addEventListener('click', this.restart.bind(this));
+  };
+
+  restart = () => {
+    this.tamagotchi = new Tamagotchi();
+    this.tamagotchi.mount({
+      healthElement: '.health',
+      hungerElement: '.hunger',
+      energyElement: '.energy',
+      funElement: '.fun',
+    });
+    console.log('game restarted');
   };
 }
