@@ -2,7 +2,9 @@ import Game from './js/game.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const game = new Game();
-  const restartButton = document.querySelector('.action-button--restart');
+  const restartButton = document.querySelector(
+    '.action-button--restart'
+  ) as HTMLButtonElement;
 
   // Start game
   game.start({
