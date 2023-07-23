@@ -35,25 +35,19 @@ export default class Tamagotchi {
 
   mount = ({ healthElement, hungerElement, energyElement, funElement }) => {
     const actionButtons = document.querySelector('.action-buttons__gameon');
-
-    // actionButtons.addEventListener('mousedown', this.startAction.bind(this));
-    // actionButtons.addEventListener('mouseup', this.stopAction.bind(this));
-
-    // actionButtons.addEventListener('touchstart', this.startAction.bind(this));
-    // actionButtons.addEventListener('touchend', this.stopAction.bind(this));
-
     actionButtons.addEventListener('click', this.handleActions.bind(this));
 
     this.displayHealth(healthElement);
     this.displayHunger(hungerElement);
     this.displayEnergy(energyElement);
     this.displayFun(funElement);
+    this.setState();
 
     this.timer = setInterval(() => {
       this.setState();
       this.handleParameters();
       this.timeOfGame++;
-      // console.log(this.timeOfGame + ' seconds passed');
+      console.log(this.timeOfGame + ' seconds passed');
     }, 1000);
   };
 
@@ -72,6 +66,9 @@ export default class Tamagotchi {
 
       buttonsGameover.classList.add('active');
       buttonsGameover.setAttribute('disabled', false);
+
+      clearInterval(this.timer);
+      console.log(`time of game ${this.timeOfGame}`);
     } else {
       buttonsGameon.classList = 'action-buttons__gameon active';
       buttonsGameon.setAttribute('disabled', false);
