@@ -1,5 +1,5 @@
 export default class Abilities {
-  constructor() {
-    console.log("Abilities module initialized");
-  }
+    constructor() {
+        console.log("Abilities module initialized");
+    }
 }
