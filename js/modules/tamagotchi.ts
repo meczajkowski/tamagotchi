@@ -1,4 +1,14 @@
 export default class Tamagotchi {
+  health: { value: number; importance: number };
+  hunger: { value: number; importance: number };
+  energy: { value: number; importance: number };
+  fun: { value: number; importance: number };
+  state: string;
+  isPlaying: boolean;
+  isSleeping: boolean;
+  isEating: boolean;
+  timeOfGame: number;
+  timer: number | undefined;
   constructor() {
     this.health = { value: 10, importance: 1 };
     this.hunger = { value: 10, importance: 3 };
@@ -13,28 +23,48 @@ export default class Tamagotchi {
     console.log('Tamagotchi initialized');
   }
 
-  displayHealth = (elementSelector) => {
-    const displayElement = document.querySelector(elementSelector);
-    displayElement.innerText = this.health.value;
+  displayHealth = (elementSelector: string) => {
+    const displayElement = document.querySelector(
+      elementSelector
+    ) as HTMLElement;
+    displayElement.innerText = this.health.value.toString();
   };
 
-  displayHunger = (elementSelector) => {
-    const displayElement = document.querySelector(elementSelector);
-    displayElement.innerText = this.hunger.value;
+  displayHunger = (elementSelector: string) => {
+    const displayElement = document.querySelector(
+      elementSelector
+    ) as HTMLElement;
+    displayElement.innerText = this.hunger.value.toString();
   };
 
-  displayEnergy = (elementSelector) => {
-    const displayElement = document.querySelector(elementSelector);
-    displayElement.innerText = this.energy.value;
+  displayEnergy = (elementSelector: string) => {
+    const displayElement = document.querySelector(
+      elementSelector
+    ) as HTMLElement;
+    displayElement.innerText = this.energy.value.toString();
   };
 
-  displayFun = (elementSelector) => {
-    const displayElement = document.querySelector(elementSelector);
-    displayElement.innerText = this.fun.value;
+  displayFun = (elementSelector: string) => {
+    const displayElement = document.querySelector(
+      elementSelector
+    ) as HTMLElement;
+    displayElement.innerText = this.fun.value.toString();
   };
 
-  mount = ({ healthElement, hungerElement, energyElement, funElement }) => {
-    const actionButtons = document.querySelector('.action-buttons__gameon');
+  mount = ({
+    healthElement,
+    hungerElement,
+    energyElement,
+    funElement,
+  }: {
+    healthElement: string;
+    hungerElement: string;
+    energyElement: string;
+    funElement: string;
+  }) => {
+    const actionButtons = document.querySelector(
+      '.action-buttons__gameon'
+    ) as HTMLElement;
     actionButtons.addEventListener('click', this.handleActions.bind(this));
 
     this.displayHealth(healthElement);
@@ -52,8 +82,12 @@ export default class Tamagotchi {
   };
 
   updateDisplay() {
-    const buttonsGameon = document.querySelector('.action-buttons__gameon');
-    const buttonsGameover = document.querySelector('.action-buttons__gameover');
+    const buttonsGameon = document.querySelector(
+      '.action-buttons__gameon'
+    ) as HTMLElement;
+    const buttonsGameover = document.querySelector(
+      '.action-buttons__gameover'
+    ) as HTMLElement;
 
     this.displayHealth('.health');
     this.displayHunger('.hunger');
@@ -62,19 +96,19 @@ export default class Tamagotchi {
 
     if (this.state === 'dead') {
       buttonsGameon.classList.remove('active');
-      buttonsGameon.setAttribute('disabled', true);
+      buttonsGameon.setAttribute('disabled', 'true');
 
       buttonsGameover.classList.add('active');
-      buttonsGameover.setAttribute('disabled', false);
+      buttonsGameover.setAttribute('disabled', 'false');
 
       clearInterval(this.timer);
       console.log(`time of game ${this.timeOfGame}`);
     } else {
-      buttonsGameon.classList = 'action-buttons__gameon active';
-      buttonsGameon.setAttribute('disabled', false);
+      buttonsGameon.className = 'action-buttons__gameon active';
+      buttonsGameon.setAttribute('disabled', 'false');
 
-      buttonsGameover.classList = 'action-buttons__gameover';
-      buttonsGameover.setAttribute('disabled', false);
+      buttonsGameover.className = 'action-buttons__gameover';
+      buttonsGameover.setAttribute('disabled', 'false');
     }
   }
 
@@ -158,19 +192,26 @@ export default class Tamagotchi {
   }
 
   setAvatar() {
-    const avatar = document.querySelector('.display__tamagotchi');
-    const avatarStatus = document.querySelector('.display__tamagotchi-status');
+    const avatar = document.querySelector(
+      '.display__tamagotchi'
+    ) as HTMLElement;
+    const avatarStatus = document.querySelector(
+      '.display__tamagotchi-status'
+    ) as HTMLElement;
 
-    avatar.classList = `display__tamagotchi display__tamagotchi--${this.state}`;
+    avatar.className = `display__tamagotchi display__tamagotchi--${this.state}`;
     avatarStatus.textContent = this.state.toUpperCase();
   }
 
-  handleActions(event) {
-    const actionButtons = document.querySelector('.action-buttons__gameon');
+  handleActions(event: MouseEvent) {
+    const actionButtons = document.querySelector(
+      '.action-buttons__gameon'
+    ) as HTMLElement;
+    const targetElement = event.target as HTMLElement;
 
-    if (event.target === actionButtons) return;
+    if (targetElement === actionButtons) return;
 
-    if (event.target.closest('.action-button--hunger')) {
+    if (targetElement.closest('.action-button--hunger')) {
       if (this.isEating) {
         this.stopFeeding();
       } else {
@@ -180,7 +221,7 @@ export default class Tamagotchi {
       }
     }
     // this is the code that stops the Tamagotchi from sleeping when another action is pressed or when the sleep action is finished by clicking on the action button again
-    if (event.target.closest('.action-button--sleep')) {
+    if (targetElement.closest('.action-button--sleep')) {
       if (this.isSleeping) {
         this.stopSleeping();
       } else {
@@ -190,7 +231,7 @@ export default class Tamagotchi {
       }
     }
     // this is the code that stops the Tamagotchi from playing when another action is pressed or when the play action is finished by clicking on the action button again
-    if (event.target.closest('.action-button--fun')) {
+    if (targetElement.closest('.action-button--fun')) {
       if (this.isPlaying) {
         this.stopPlaying();
       } else {
