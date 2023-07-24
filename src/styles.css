@@ -112,42 +112,42 @@ body {
 }
 
 .display__tamagotchi--happy {
-  background: url('./assets/sprites/State=Standing.png');
+  background: url('.././assets/sprites/State=Standing.png');
 }
 
 .display__tamagotchi--dead {
   left: -10px;
   width: 182px;
   height: 72px;
-  background: url('./assets/sprites/State=Dead.png');
+  background: url('.././assets/sprites/State=Dead.png');
 }
 
 .display__tamagotchi--sleepy {
-  background: url('./assets/sprites/State=Sleepy.png');
+  background: url('.././assets/sprites/State=Sleepy.png');
 }
 
 .display__tamagotchi--hungry {
-  background: url('./assets/sprites/State=Hungry.png');
+  background: url('.././assets/sprites/State=Hungry.png');
 }
 
 .display__tamagotchi--bored {
-  background: url('./assets/sprites/State=Bored.png');
+  background: url('.././assets/sprites/State=Bored.png');
 }
 
 .display__tamagotchi--sleeping {
-  background: url('./assets/sprites/State=Sleeping.png');
+  background: url('.././assets/sprites/State=Sleeping.png');
   animation: animate-tamagotchi 0.8s steps(2) infinite;
 }
 
 .display__tamagotchi--eating {
-  background: url('./assets/sprites/State=Eating.png');
+  background: url('.././assets/sprites/State=Eating.png');
   animation: animate-tamagotchi 0.8s steps(2) infinite;
 }
 .display__tamagotchi--playing {
   left: -40px;
   width: 200px;
   height: 144px;
-  background: url('./assets/sprites/State=Playing.png');
+  background: url('.././assets/sprites/State=Playing.png');
   animation: animate-tamagotchi-playing 0.8s steps(2) infinite;
 }
 
