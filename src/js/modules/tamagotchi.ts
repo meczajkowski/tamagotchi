@@ -191,11 +191,11 @@ export default class Tamagotchi {
       // set the Tamagotchi's state to 'dead' when its health falls below 0
       this.state = 'dead';
       this.setActionButtons();
-    } else if (this.isEating) {
+    } else if (this.isEating && this.hunger.value < 10) {
       this.state = 'eating';
-    } else if (this.isSleeping) {
+    } else if (this.isSleeping && this.energy.value < 10) {
       this.state = 'sleeping';
-    } else if (this.isPlaying) {
+    } else if (this.isPlaying && this.fun.value < 10) {
       this.state = 'playing';
     } else if (this.hunger.value <= 6) {
       this.state = 'hungry';
