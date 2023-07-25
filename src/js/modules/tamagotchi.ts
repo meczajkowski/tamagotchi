@@ -143,7 +143,9 @@ export default class Tamagotchi {
     else if (this.isPlaying && this.fun.value < 9) {
       this.fun.value += 2;
       // Playing should decrease energy by 1 energy point per second
-      this.energy.value -= 1;
+      if (this.energy.value > 0) {
+        this.energy.value -= 1;
+      }
     }
 
     // Health
