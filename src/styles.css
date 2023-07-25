@@ -130,7 +130,7 @@ body {
   background: url('.././assets/sprites/State=Hungry.png');
 }
 
-.display__tamagotchi--bored {
+.display__tamagotchi--sad {
   background: url('.././assets/sprites/State=Bored.png');
 }
 
