@@ -72,27 +72,31 @@ export default class Tamagotchi {
     this.displayEnergy(energyElement);
     this.displayFun(funElement);
     this.setState();
+    this.setActionButtons();
 
     this.timer = setInterval(() => {
-      this.setState();
+      // this.setState();
       this.handleParameters();
+      this.setState();
       this.timeOfGame++;
       console.log(this.timeOfGame + ' seconds passed');
     }, 1000);
   };
 
   updateDisplay() {
+    this.displayHealth('.health');
+    this.displayHunger('.hunger');
+    this.displayEnergy('.energy');
+    this.displayFun('.fun');
+  }
+
+  setActionButtons() {
     const buttonsGameon = document.querySelector(
       '.action-buttons__gameon'
     ) as HTMLElement;
     const buttonsGameover = document.querySelector(
       '.action-buttons__gameover'
     ) as HTMLElement;
-
-    this.displayHealth('.health');
-    this.displayHunger('.hunger');
-    this.displayEnergy('.energy');
-    this.displayFun('.fun');
 
     if (this.state === 'dead') {
       buttonsGameon.classList.remove('active');
@@ -186,6 +190,7 @@ export default class Tamagotchi {
     if (this.health.value <= 0) {
       // set the Tamagotchi's state to 'dead' when its health falls below 0
       this.state = 'dead';
+      this.setActionButtons();
     } else if (this.isEating) {
       this.state = 'eating';
     } else if (this.isSleeping) {
