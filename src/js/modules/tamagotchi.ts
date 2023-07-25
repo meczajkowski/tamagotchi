@@ -122,8 +122,12 @@ export default class Tamagotchi {
         this.energy.importance = 2;
       }
     } // Sleeping should recover 2 energy point per second
-    else if (this.isSleeping && this.energy.value < 9) {
-      this.energy.value += 2;
+    else if (this.isSleeping && this.energy.value < 10) {
+      if (this.energy.value === 9) {
+        this.energy.value++;
+      } else {
+        this.energy.value += 2;
+      }
     }
 
     // Hunger
@@ -131,8 +135,12 @@ export default class Tamagotchi {
     if (this.hunger.value > 0 && !this.isEating) {
       this.hunger.value -= 1;
     } // Eating should recover 2 hunger point per second
-    else if (this.isEating && this.hunger.value < 9) {
-      this.hunger.value += 2;
+    else if (this.isEating && this.hunger.value < 10) {
+      if (this.hunger.value === 9) {
+        this.hunger.value++;
+      } else {
+        this.hunger.value += 2;
+      }
     }
 
     // Fun
@@ -140,8 +148,12 @@ export default class Tamagotchi {
     if (this.fun.value > 0 && !this.isPlaying) {
       this.fun.value -= 1;
     } // Playing should recover 2 fun points per second
-    else if (this.isPlaying && this.fun.value < 9) {
-      this.fun.value += 2;
+    else if (this.isPlaying && this.fun.value < 10) {
+      if (this.fun.value === 9) {
+        this.fun.value++;
+      } else {
+        this.fun.value += 2;
+      }
       // Playing should decrease energy by 1 energy point per second
       if (this.energy.value > 0) {
         this.energy.value -= 1;
