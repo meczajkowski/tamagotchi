@@ -70,6 +70,7 @@ body {
   font-size: 60px;
   display: flex;
   align-items: center;
+  color: var(--color-secondary-dark);
 }
 
 .display__tamagotchi-container {
@@ -130,7 +131,7 @@ body {
   background: url('.././assets/sprites/State=Hungry.png');
 }
 
-.display__tamagotchi--bored {
+.display__tamagotchi--sad {
   background: url('.././assets/sprites/State=Bored.png');
 }
 
