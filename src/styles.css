@@ -70,6 +70,7 @@ body {
   font-size: 60px;
   display: flex;
   align-items: center;
+  color: var(--color-secondary-dark);
 }
 
 .display__tamagotchi-container {
