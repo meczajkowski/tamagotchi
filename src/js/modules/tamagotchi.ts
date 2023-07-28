@@ -27,6 +27,13 @@ export default class Tamagotchi {
     const displayElement = document.querySelector(
       elementSelector
     ) as HTMLElement;
+
+    if (this.health.value === 10) {
+      displayElement.style.fontSize = '40px';
+      displayElement.style.letterSpacing = '-0.15em';
+    } else {
+      displayElement.removeAttribute('style');
+    }
     displayElement.innerText = this.health.value.toString();
   };
 
@@ -34,6 +41,13 @@ export default class Tamagotchi {
     const displayElement = document.querySelector(
       elementSelector
     ) as HTMLElement;
+
+    if (this.hunger.value === 10) {
+      displayElement.style.fontSize = '40px';
+      displayElement.style.letterSpacing = '-0.15em';
+    } else {
+      displayElement.removeAttribute('style');
+    }
     displayElement.innerText = this.hunger.value.toString();
   };
 
@@ -41,6 +55,13 @@ export default class Tamagotchi {
     const displayElement = document.querySelector(
       elementSelector
     ) as HTMLElement;
+
+    if (this.energy.value === 10) {
+      displayElement.style.fontSize = '40px';
+      displayElement.style.letterSpacing = '-0.15em';
+    } else {
+      displayElement.removeAttribute('style');
+    }
     displayElement.innerText = this.energy.value.toString();
   };
 
@@ -48,6 +69,13 @@ export default class Tamagotchi {
     const displayElement = document.querySelector(
       elementSelector
     ) as HTMLElement;
+
+    if (this.fun.value === 10) {
+      displayElement.style.fontSize = '40px';
+      displayElement.style.letterSpacing = '-0.15em';
+    } else {
+      displayElement.removeAttribute('style');
+    }
     displayElement.innerText = this.fun.value.toString();
   };
 
