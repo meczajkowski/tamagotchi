@@ -1,7 +1,7 @@
 
 # Tamagotchi 👾
 
-Manage your Tamagotchi's vital stats using action buttons. Keep an eye on its hunger and energy levels, ensuring they never dip below 6 to maintain optimal health.
+Manage your Tamagotchi's vital stats using action buttons. Keep an eye on its hunger, energy and fun levels, ensuring they never dip below 6 to keep it happy.
 
 Click an action button once to initiate an activity. Easily switch between actions by clicking on a different one, or effortlessly halt the current action by clicking it again.
 
